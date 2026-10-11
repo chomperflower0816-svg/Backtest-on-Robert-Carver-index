@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.DS_Store
+simple_result.png
+qqq_account_curve.png
+ema_cross.png

@@ -1,0 +1,62 @@
+# ════════════════════════════════════════════════════════════════════════
+#  YOUR CONTROL BOX  —  edit the numbers, then run:  python run_qqq.py
+# ════════════════════════════════════════════════════════════════════════
+#  Every setting below has a plain-English note. You do NOT need to
+#  understand the maths — just read "what it does" and change the number.
+#  After editing, save the file and re-run. Nothing here can break anything;
+#  if you mess it up, the worst case is a weird-looking backtest.
+# ────────────────────────────────────────────────────────────────────────
+
+
+# ╭─ EVERYDAY KNOBS ─ the 4 things most people actually change ────────────╮
+
+# 1) How much (pretend) money the system trades with.
+#    Only changes the dollar numbers in the report, not the % performance.
+capital: 100000          # e.g. 100000 = $100k
+
+# 2) HOW WILD THE RIDE IS  (the single most important knob).
+#    This is the yearly "risk dial". Higher = bigger positions, bigger
+#    gains AND bigger losses. Lower = calmer, smaller swings.
+#      0.10 = very calm      0.20 = balanced (default)
+#      0.30 = aggressive     0.40 = very aggressive
+risk_level: 0.20
+
+# 3) HOW FAST THE SYSTEM REACTS to trends.
+#    Pick ONE word. "fast" jumps in/out quickly (more trading, more costs);
+#    "slow" only moves on big, long trends (less trading). "balanced" is
+#    a mix of speeds, which is what Carver recommends.
+#      options:  fast  |  balanced  |  slow
+reaction_speed: balanced
+
+# 4) TRADING COST per trade, in "basis points" (1 bp = 0.01%).
+#    Roughly the commission + spread you'd pay. 1 is realistic for QQQ.
+#    Turn it up to be more pessimistic/conservative.
+cost_bps: 1.0
+
+# ╰────────────────────────────────────────────────────────────────────────╯
+
+
+# ╭─ ADVANCED ─ leave these alone unless you've read Carver's book ────────╮
+#  These are the engine internals. The "reaction_speed" word above already
+#  picks sensible values for you; only touch this if you want full control.
+
+advanced:
+  # Set to true to ignore the "reaction_speed" word and use the exact
+  # EWMAC speed pairs you list below instead.
+  use_custom_speeds: false
+
+  # Each pair is [fast, slow] days. More pairs = more diversified trend signal.
+  custom_speeds: [[8, 32], [16, 64], [32, 128], [64, 256]]
+
+  # How many days of history the volatility estimate looks at. Smaller =
+  # reacts faster to changes in market choppiness. Carver uses ~35.
+  volatility_lookback_days: 35
+
+# ╰────────────────────────────────────────────────────────────────────────╯
+
+
+# Presets used by "reaction_speed" (you can ignore this section):
+_speed_presets:
+  fast:     [[2, 8],  [4, 16],  [8, 32],   [16, 64]]
+  balanced: [[8, 32], [16, 64], [32, 128], [64, 256]]
+  slow:     [[16, 64], [32, 128], [64, 256]]
